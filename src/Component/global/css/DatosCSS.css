@@ -1,3 +1,7 @@
+.the-icons {
+  font-size: 25px;
+}
+
 .DatosCSS-input-checkbox {
   width:20px;
   height:17px;
@@ -45,6 +49,20 @@ td{
 }
 
 .two-fields {
+  width:10%;
+}
+
+.two-fields button {
+  width:50% !important;
+}
+.mybtn-red{
+  color: red;
+}
+.mybtn-blue{
+  color: blue;
+}
+/*
+.two-fields {
   width:8%;
 }
 .two-fields .input-group {
@@ -53,3 +71,10 @@ td{
 .two-fields input {
   width:50% !important;
 }
+.botonimagen{
+  background-image:url(../image/observacion.png);
+  background-repeat:no-repeat;
+  height:10px;
+  width:10px;
+  background-position:center;
+}*/

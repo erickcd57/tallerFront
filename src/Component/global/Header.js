@@ -10,7 +10,6 @@ class Header extends Component {
         <header className="Logo">
           <h1 className="titulo1">Módulo Control de Recibos </h1>
         </header>
-
       </div>
     );
   }

@@ -8,6 +8,7 @@ import Check from './Check';
 import MyModalEco from './MyModalEco';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
+import './css/bootstrap.min.css';
 //import Datos from './Datos/Items';
 
 
@@ -34,6 +35,7 @@ class ListarComponentes extends Component {
             isLoading: false
         }
     }
+
     componentWillMount() {
 
 
@@ -293,6 +295,10 @@ class ListarComponentes extends Component {
         let node = document.createElement('div');
         ReactDOM.render(component, node);
     }
+
+    marcar() {
+
+    }
     render() {
 
         const listado = this.state.data;
@@ -300,9 +306,13 @@ class ListarComponentes extends Component {
 
         return (
             <div className="table-scroll">
+                <div>
+                    <input type="button" value="Sel. Todo" class="btn btn-success"></input>
+                </div>
                 <table className="table table-striped table-bordered table-hover">
                     <thead>
                         <tr className="tabla-cabecera">
+                            <th>Sel.</th>
                             <th>Nro</th>
                             <th>Nombre Apellido</th>
                             <th>Concepto</th>
@@ -317,6 +327,9 @@ class ListarComponentes extends Component {
                     </thead>
                     <tbody>{listado.map((dynamicData, i) =>
                         <tr key={i}>
+                            <td>
+                                <input type="checkbox"></input>
+                            </td>
                             <td>{i + 1}</td>
                             <td onClick={(e) => this.eventoNombre(e)} title="click para ver detalles" className="detalles" id={(dynamicData.codigo === "0") ? (dynamicData.nombre) : (dynamicData.codigo)}>{dynamicData.nombre}</td>
                             <td>{dynamicData.concepto}</td>
@@ -331,12 +344,15 @@ class ListarComponentes extends Component {
                                 <Check validado={dynamicData.validado} id={dynamicData.id_rec}
                                     change={this.handleChangeEstado} />
                             </td>
-                            <td className="two-fields"> 
-                                <input type="button" onClick={this.openModal} id={dynamicData.observacion}
-                                    name={dynamicData.id_rec} className="btn btn-primary" value="OBS"></input>
-                                <input type="button" onClick={this.openModalEco} id={dynamicData.observacion_upg}
-                                    name={dynamicData.id_rec} className="btn btn-primary"
-                                    value="..."></input>
+                            <td className="two-fields">
+                                <button type="button" onClick={this.openModalEco} id={dynamicData.observacion_upg}
+                                    name={dynamicData.id_rec} class="btn btn-primary"> 
+                                    <span class="mybtn-red glyphicon glyphicon-eye-open"></span>
+                                </button>
+                                <button onClick={this.openModal} id={dynamicData.observacion}
+                                    name={dynamicData.id_rec} class="btn btn-primary">
+                                    <span class="mybtn-blue glyphicon glyphicon-eye-open"></span>
+                                </button>
                             </td>
                         </tr>
                     )}

@@ -41,7 +41,7 @@ class MyModal extends Component{
             <div>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} external={externalCloseBtn}>
                     <ModalHeader>
-                        <Label>Observaciones</Label>
+                        <Label>ObservacionesUPG</Label>
                     </ModalHeader>
                     <ModalBody>
                       <Input type="textarea" className = "form-control" id = "message-text" innerRef={this.texto} defaultValue={text!=="0"?(text):(null)}/>

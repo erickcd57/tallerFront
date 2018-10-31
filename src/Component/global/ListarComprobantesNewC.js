@@ -11,6 +11,7 @@ import './css/ListarComprobanteNewC.css';
 import MyModalEco from './MyModalEco';
 import Modal2 from './MyModalNewC';
 import ReactDOM from "react-dom";
+import './css/bootstrap.min.css';
 //import Datos from './Datos/Items';
 //import Datos2 from './Datos/Tipo';
 
@@ -319,6 +320,7 @@ class ListarComponentes extends Component {
                     <table className="tabla table-striped table-bordered table-hover" id="table">
                         <thead>
                             <tr className="tabla-cabecera">
+                                <th>Sel.</th>
                                 <th>Nro</th>
                                 <th>Nombre Apellido</th>
                                 <th>Concepto</th>
@@ -334,6 +336,9 @@ class ListarComponentes extends Component {
                         </thead>
                         <tbody id="table">{listado.map((dynamicData, i) =>
                             <tr key={i}>
+                                <td>
+                                    <input type="checkbox"></input>
+                                </td>
                                 <td>{i + 1}</td>
                                 <td onClick={(e) => this.eventoNombre(dynamicData.id, dynamicData.nombre, dynamicData.codigo)} title="click para añadir un nuevo registro" className="detalles" nam={dynamicData.nombre}>{dynamicData.nombre}</td>
                                 <td>{dynamicData.concepto}</td>
@@ -351,11 +356,14 @@ class ListarComponentes extends Component {
                                         change={this.handleChangeEstado} disabled={true} />
                                 </td>
                                 <td className="two-fields">
-                                    <input type="button" onClick={this.openModal} id={dynamicData.observacion}
-                                        name={dynamicData.id_rec} className="btn btn-primary" value="OBS"></input>
-                                    <input type="button" onClick={this.openModalEco} id={dynamicData.observacion_upg}
-                                        name={dynamicData.id_rec} className="btn btn-primary"
-                                        value="..."></input>
+                                    <button type="button" onClick={this.openModalEco} id={dynamicData.observacion_upg}
+                                        name={dynamicData.id_rec} class="btn btn-primary">
+                                        <span class="mybtn-red glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                    <button onClick={this.openModal} id={dynamicData.observacion}
+                                        name={dynamicData.id_rec} class="btn btn-primary">
+                                        <span class="mybtn-blue glyphicon glyphicon-eye-open"></span>
+                                    </button>
                                 </td>
                             </tr>
                         )}
