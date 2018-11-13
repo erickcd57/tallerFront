@@ -8,7 +8,7 @@ import Check from './CheckNewC';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
 import './css/ListarComprobanteNewC.css';
-import MyModalEco from './MyModalEco';
+import MyModalUpg from './MyModalUpg';
 import Modal2 from './MyModalNewC';
 import ReactDOM from "react-dom";
 import './css/bootstrap.min.css';
@@ -20,9 +20,9 @@ class ListarComponentes extends Component {
         super(...props);
         this.handleEnviarData = this.handleEnviarData.bind(this);
         this.openModal = this.openModal.bind(this);
-        this.openModalEco = this.openModalEco.bind(this);
+        this.openModalUpg = this.openModalUpg.bind(this);
         this.handleChangeObs_comentarios = this.handleChangeObs_comentarios.bind(this);
-        this.handleChangeObs_economia = this.handleChangeObs_economia.bind(this);
+        this.handleChangeObs_upg = this.handleChangeObs_upg.bind(this);
         this.handleChangeUbic = this.handleChangeUbic.bind(this);
         this.handleChangeType = this.handleChangeType.bind(this);
         this.Obj = this.Obj.bind(this);
@@ -208,7 +208,7 @@ class ListarComponentes extends Component {
         // console.log(this.state.data);
     }
 
-    handleChangeObs_economia(text, id_rec) {
+    handleChangeObs_upg(text, id_rec) {
         this.setState(prevState => (
             prevState.data.map(items => {
                 if (items.id_rec === id_rec) {
@@ -237,12 +237,12 @@ class ListarComponentes extends Component {
         let node = document.createElement('div');
         ReactDOM.render(component, node);
     }
-    openModalEco(e) {
+    openModalUpg(e) {
         //https://github.com/xue2han/react-dynamic-modal
         let text = e.target.id;
         // console.log(text);
         let id_re = e.target.name;
-        let component = <MyModalEco text={text} id_rec={id_re} change={this.handleChangeObs_economia} estado={true} />;
+        let component = <MyModalUpg text={text} id_rec={id_re} change={this.handleChangeObs_upg} estado={true} />;
         let node = document.createElement('div');
         ReactDOM.render(component, node);
     }
@@ -356,7 +356,7 @@ class ListarComponentes extends Component {
                                         change={this.handleChangeEstado} disabled={true} />
                                 </td>
                                 <td className="two-fields">
-                                    <button type="button" onClick={this.openModalEco} id={dynamicData.observacion_upg}
+                                    <button type="button" onClick={this.openModalUpg} id={dynamicData.observacion_upg}
                                         name={dynamicData.id_rec} class="btn btn-primary">
                                         <span class="mybtn-red glyphicon glyphicon-eye-open"></span>
                                     </button>
