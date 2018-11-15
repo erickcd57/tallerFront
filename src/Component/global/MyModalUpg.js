@@ -1,41 +1,61 @@
-import React,{Component} from 'react';
-import {Modal,ModalFooter,ModalHeader,ModalBody,Button,Label,Input} from 'reactstrap';
-//import {Modal,ModalManager,Effect} from 'react-dynamic-modal';
+import React, { Component } from 'react';
+import { Modal, ModalFooter, ModalHeader, ModalBody, Button, Label, Input } from 'reactstrap';
+import { ModalManager } from 'react-dynamic-modal';
 import './css/bootstrap.css';
 
-class MyModal extends Component{
+class MyModal extends Component {
 
-    constructor(props){
-        super(props);
-        this.handlerGuardar=this.handlerGuardar.bind(this);
-        this.close=this.close.bind(this);
+    //constructor(){}
+
+    constructor() {
+        super();
+        this.handlerGuardar = this.handlerGuardar.bind(this);
+        this.close = this.close.bind(this);
         this.texto = React.createRef();
         this.state = {
             modal: false
         }
     }
-    componentWillMount(){
+    componentWillMount() {
         this.setState({
             modal: this.props.estado
         })
     }
-    handlerGuardar(){
-        let data=this.texto.current.value;
-       // console.log(data);
-        this.props.change(data,this.props.id_rec);
-      //  ModalManager.close();
+    handlerGuardar() {
+        var data = {};
+        data.idrecaudacion = this.props.id_rec;
+        data.mensaje = document.getElementById("mensaje").value;
+        ModalManager.close();
+        const url = 'https://modulocontrol.herokuapp.com/recaudaciones/observaciones';
+        console.log(JSON.stringify(data));
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status) { // exito
+                    ModalManager.close();
+                    alert('Observación actualizada')
+                } else {
+                    alert("FALLÓ OPERACIÓN, ESPERE UN MOMENTO Y VUELVA A INTENTARLO ")
+                }
+            });
+    }
+    close() {
         this.setState({
-            modal:false
+            modal: false
         })
     }
-    close(){
-        this.setState({
-            modal:false
-        })
-    }
-    render(){
-        const {text} = this.props;
-        //console.log(text);
+    render() {
+        let obs_upg = this.props.obs_upg;
+        //let nombre = this.props.nombre;
+        //const {text} = this.props;
+        //console.log(obs_upg);
         const externalCloseBtn = <button className="close" style={{ position: 'absolute', top: '15px', right: '15px' }} onClick={this.close}>&times;</button>;
         return (
             <div>
@@ -44,7 +64,7 @@ class MyModal extends Component{
                         <Label>ObservacionesUPG</Label>
                     </ModalHeader>
                     <ModalBody>
-                      <Input type="textarea" className = "form-control" id = "message-text" innerRef={this.texto} defaultValue={text!=="0"?(text):(null)}/>
+                        <Input type="textarea" className="form-control" name="mensaje" id="mensaje" defaultValue={obs_upg} ></Input>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.handlerGuardar}>Guardar</Button>{' '}

@@ -34,8 +34,9 @@ class MyModal extends Component {
         })
     }
     render() {
-        const { text } = this.props;
-        console.log(text);
+        let obs = this.props.obs;
+        //const { text } = this.props;
+        //console.log(text);
         const externalCloseBtn = <button className="close" style={{ position: 'absolute', top: '15px', right: '15px' }} onClick={this.close}>&times;</button>;
         return (
             <div>
@@ -44,7 +45,7 @@ class MyModal extends Component {
                         <Label>Observaciones</Label>
                     </ModalHeader>
                     <ModalBody>
-                        <Input type="textarea" readOnly className="form-control" id="message-text" innerRef={this.texto} defaultValue={text !== "0" ? (text) : (null)} />
+                        <Input type="textarea" readOnly className="form-control" id="message-text" defaultValue={obs} />
                     </ModalBody>
                     <ModalFooter>
                         <Button color="secondary" onClick={this.close}>Cancel</Button>
