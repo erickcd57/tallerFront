@@ -142,7 +142,7 @@ class MyModal extends Component{
                              <tr key={i}>
                                  {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1}></td>):( <td>{cont+=1}</td>)}
                                  <td>{dynamicData.concepto}</td>
-                                 {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.numero}</td>):( <td>{dynamicData.numero}</td>)}
+                                 {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.recibo}</td>):( <td>{dynamicData.recibo}</td>)}
                                  {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.importe}</td>):( <td>{dynamicData.importe}</td>)}
                                  <td>{dynamicData.fecha}</td>
                              </tr>
