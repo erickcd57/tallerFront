@@ -68,7 +68,7 @@ class MyModal extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.handlerGuardar}>Guardar</Button>{' '}
-                        <Button color="secondary" onClick={this.close}>Cancel</Button>
+                        <Button color="secondary" onClick={this.close}>Cerrar</Button>
                     </ModalFooter>
                 </Modal>
             </div>

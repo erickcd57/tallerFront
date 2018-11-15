@@ -48,7 +48,7 @@ class MyModal extends Component {
                         <Input type="textarea" readOnly className="form-control" id="message-text" defaultValue={obs} />
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={this.close}>Cancel</Button>
+                        <Button color="secondary" onClick={this.close}>Cerrar</Button>
                     </ModalFooter>
                 </Modal>
             </div>

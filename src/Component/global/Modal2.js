@@ -143,13 +143,13 @@ class MyModal extends Component{
                                  {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1}></td>):( <td>{cont+=1}</td>)}
                                  <td>{dynamicData.concepto}</td>
                                  {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.recibo}</td>):( <td>{dynamicData.recibo}</td>)}
-                                 {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.importe}</td>):( <td>{dynamicData.importe}</td>)}
+                                 {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">S/. {dynamicData.importe}</td>):( <td>{dynamicData.importe}</td>)}
                                  <td>{dynamicData.fecha}</td>
                              </tr>
                          )}
                          <tr >
                              <td colSpan={3} >Total</td>
-                             <td className="total">{this.sumaT()}</td>
+                             <td className="total">S/. {this.sumaT()}</td>
                          </tr>
                          </tbody>
                      </Table>
