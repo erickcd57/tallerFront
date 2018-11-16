@@ -84,6 +84,47 @@ class MyModal extends Component {
             });
     }
 
+    _onBlurInput(){
+        let rec_value = document.getElementById("recibo").value;
+        console.log(rec_value);
+        const url = URL.url.concat('recibo/'+rec_value);
+        // const url2 = 'http://localhost:7896/recibo/'+rec_value;
+        console.log(url);
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                if (res) { // exito
+                    if (res.response === 1) {
+                        alert("Este recibo ya se encuentra registrado");
+                        document.getElementById("importe").disabled = true;
+                        document.getElementById("fecha").disabled = true;
+                        document.getElementById("ubicacion").disabled = true;
+                        document.getElementById("tipo").disabled = true;
+                        document.getElementById("verificar").disabled = true;
+                        document.getElementById("button-send-modal").disabled = true;
+                    }else if(res.response === 0){
+                        alert("Este recibo esta habilitado");
+                        document.getElementById("importe").disabled = false;
+                        document.getElementById("fecha").disabled = false;
+                        document.getElementById("ubicacion").disabled = false;
+                        document.getElementById("tipo").disabled = false;
+                        document.getElementById("verificar").disabled = false;
+                        document.getElementById("button-send-modal").disabled = false;
+                    }
+                } else {
+                    alert("FALLÓ OPERACIÓN, ESPERE UN MOMENTO Y VUELVA A INTENTARLO ")
+                }
+            });
+    }
 
     render() {
         let nombre = this.props.nombre;
@@ -109,7 +150,7 @@ class MyModal extends Component {
                         </div>
                         <div className="form-group">
                             <label>Recibo</label>
-                            <input type="number" min="0" className="form-control" placeholder="Recibo" id="recibo" required />
+                            <input type="number" min="0" className="form-control" placeholder="Recibo" id="recibo"  onBlur={this._onBlurInput} required />
                         </div>
                         <div className="form-group">
                             <label>Importe</label>
@@ -149,7 +190,7 @@ class MyModal extends Component {
                             </textarea>
                         </div>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={ModalManager.close}>Cerrar</button>
-                        <button type="button" className="btn btn-primary" onClick={this.handlerGuardar}>ENVIAR</button>
+                        <button id="button-send-modal" type="button" className="btn btn-primary" onClick={this.handlerGuardar}>ENVIAR</button>
                     </form>
                 </div>
                 <script>
