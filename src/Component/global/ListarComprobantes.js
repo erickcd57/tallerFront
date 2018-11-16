@@ -214,21 +214,35 @@ class ListarComponentes extends Component {
         let obs = o;
         // console.log(text);
         //let id_re = e.target.name;
-        let component = <MyModal id_rec={id} obs={obs} change={this.handleChangeObs_comentarios} estado={true} />;
+        let component = <MyModal id_rec={id} obs={obs} onChange={this.handleChangeObs_comentarios} estado={true} />;
         let node = document.createElement('div');
         ReactDOM.render(component, node);
 
     }
-    openModalUpg(e, oUPG) {
+    openModalUpg(e) {
         let id = e;
-        let obsUpg = oUPG;
-        //https://github.com/xue2han/react-dynamic-modal
-        //console.log(text);
-        //let id_re = e.target.name;
-        let component = <MyModalUpg id_rec={id} obs_upg={obsUpg} change={this.handleChangeObs_upg} estado={true} />;
-        let node = document.createElement('div');
-        ReactDOM.render(component, node);
-        //console.log(this.state.data);
+        const url = 'https://modulocontrol.herokuapp.com/recaudaciones/observaciones/' + id;
+        //console.log(url);
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }).then(res => res.json())
+            .then(res => {
+                if (res.status) {
+                    this.setState({
+                        obsUpg: res.data
+                    })
+                    let component = <MyModalUpg id_rec={id} obs_upg={res.data} onChange={this.handleChangeObs_upg} estado={true} />;
+                    let node = document.createElement('div');
+                    ReactDOM.render(component, node);
+                    //console.log(res);
+                }else{
+                    alert("FALLÓ OPERACIÓN, ESPERE UN MOMENTO Y VUELVA A INTENTARLO ")
+                }
+            });
     }
     // envia un JSON al server
     handleEnviarData() {
@@ -306,7 +320,7 @@ class ListarComponentes extends Component {
     render() {
 
         const listado = this.state.data;
-        // console.log(listado);
+        //console.log(listado);
 
         return (
             <div className="table-scroll">
