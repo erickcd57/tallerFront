@@ -45,10 +45,11 @@ class ListarComponentes extends Component {
         if (lista !== null) {
             lista.map((item, key) => {
                 arreglo = arreglo.concat(new this.Obj(item.id_rec, item.observacion, item.observacion_upg, item.id_ubicacion && item.id_ubicacion, item.id_tipo, item.validado, item.nombre,
-                    item.concepto, item.codigo, item.recibo, item.importe, item.fecha, item.id_alum));
+                    item.concepto, item.codigo, item.recibo, 
+                    item.moneda, item.mascara, item.importe, item.fecha, item.id_alum));
                 return null;
             });
-            //console.log(arreglo);
+            console.log(arreglo);
             this.setState({
                 data: arreglo
             }/*, function () {
@@ -106,7 +107,8 @@ class ListarComponentes extends Component {
     }
 
     // crear un objeto para enviar al server
-    crearJSON(codigo, concepto, ubic, id_rec, recibo, importe, obs, obs_upg, flag, fecha, validado, tipo) {
+    crearJSON(codigo, concepto, ubic, id_rec, recibo, 
+        moneda, mascara, importe, obs, obs_upg, flag, fecha, validado, tipo) {
         if (obs == null) obs = "";
         if (obs_upg == null) obs_upg = "";
         if (ubic == null) ubic = 0;
@@ -117,13 +119,14 @@ class ListarComponentes extends Component {
         this.ubic = ubic;
         this.codigo = codigo;
         this.recibo = recibo;
+        this.moneda = moneda;
+        this.mascara = mascara;
         this.importe = importe;
         this.obs = flag + "-" + obs;
         this.obs_upg = flag + "-" + obs_upg;
         this.fecha = fecha;
         this.tipo = tipo;
         this.validado = validado;
-
     }
 
     // funcion verifica los checks y las observaciones nuevas
@@ -131,7 +134,8 @@ class ListarComponentes extends Component {
         const arreglo = this.state.data;
         let arreglo2 = [];
         arreglo.map(item => {
-            arreglo2 = arreglo2.concat(new this.crearJSON(item.codigo, item.concepto, item.ubic, item.id_rec, item.recibo, item.importe,
+            arreglo2 = arreglo2.concat(new this.crearJSON(item.codigo, item.concepto, item.ubic, item.id_rec, item.recibo, 
+                item.moneda, item.mascara, item.importe,
                 item.obs, item.obs_upg, item.flag, item.fecha, item.validado, item.tipo))
             return null;
         });
@@ -144,7 +148,8 @@ class ListarComponentes extends Component {
     }
 
     //crea un objeto para pasar al hijo
-    Obj(id_rec, obs, obs_upg, ubic, tipo, validado, nombre, concepto, codigo, recibo, importe, fecha, id_alum) {
+    Obj(id_rec, obs, obs_upg, ubic, tipo, validado, nombre, concepto, codigo, recibo, 
+        moneda, mascara, importe, fecha, id_alum) {
         this.id_rec = id_rec;
         this.obs = obs;
         this.obs_upg = obs_upg;
@@ -155,6 +160,8 @@ class ListarComponentes extends Component {
         this.concepto = concepto;
         this.codigo = codigo;
         this.recibo = recibo;
+        this.moneda = moneda;
+        this.mascara = mascara;
         this.importe = importe;
         this.fecha = fecha && fecha.substr(8, 2) + "-" + fecha.substr(5, 2) + "-" + fecha.substr(0, 4);
         this.id = id_alum;
@@ -344,6 +351,7 @@ class ListarComponentes extends Component {
                                 <th>Concepto</th>
                                 <th>Codigo</th>
                                 <th>Recibo</th>
+                                <th>Moneda</th>
                                 <th>Importe</th>
                                 <th>Fecha</th>
                                 <th>Ubicación</th>
@@ -362,7 +370,8 @@ class ListarComponentes extends Component {
                                 <td>{dynamicData.concepto}</td>
                                 <td>{dynamicData.codigo}</td>
                                 <td>{dynamicData.recibo}</td>
-                                <td>S/.{dynamicData.importe}</td>
+                                <td>{dynamicData.moneda}</td>
+                                <td>{dynamicData.mascara} {dynamicData.importe}</td>
                                 <td>{dynamicData.fecha}</td>
                                 <td><Combo items={this.state.ubicDato} val={this.handleChangeUbic} ubic={dynamicData.ubic}
                                     id_rec={dynamicData.id_rec} /></td>

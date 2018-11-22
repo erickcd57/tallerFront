@@ -43,7 +43,9 @@ class ListarComponentes extends Component {
             lista.map((item, key) => {
                 arreglo = arreglo.concat(new this.Obj(item.id_rec, item.observacion, item.observacion_upg, item.id_ubicacion
                     && item.id_ubicacion, item.validado, item.nombre,
-                    item.concepto, item.codigo, item.recibo, item.importe, item.fecha));
+                    item.concepto, item.codigo, item.recibo, item.moneda, item.mascara,
+                     item.importe, item.fecha
+                    ));
                 return null;
             });
             const listadoOrdenado = arreglo.sort(function (a, b) {
@@ -56,7 +58,7 @@ class ListarComponentes extends Component {
                 //iguales
                 return 0;
             });
-            // console.log(arreglo);
+            //console.log(arreglo);
             this.setState({
                 data: listadoOrdenado
             }/*, function () {
@@ -65,7 +67,6 @@ class ListarComponentes extends Component {
             this.setState({
                 data: arreglo
             });
-
             //console.log( listadoOrdenado );
             /*this.setState({
                dataOrdenada:listadoOrdenado
@@ -126,7 +127,8 @@ class ListarComponentes extends Component {
     }
 
     //crea un objeto para pasar al hijo
-    Obj(id_rec, obs, obs_upg, ubic, validado, nombre, concepto, codigo, recibo, importe, fecha) {
+    Obj(id_rec, obs, obs_upg, ubic, validado, nombre, concepto, codigo, recibo,
+        moneda, mascara, importe, fecha) {
         this.id_rec = id_rec;
         this.obs = obs;
         this.obs_upg = obs_upg;
@@ -136,6 +138,8 @@ class ListarComponentes extends Component {
         this.concepto = concepto;
         this.codigo = codigo;
         this.recibo = recibo;
+        this.moneda = moneda;
+        this.mascara = mascara;
         this.importe = importe;
         //console.log(convertDateFormat(fecha.substr(0,10)));
         if (fecha !== null) {
@@ -248,6 +252,7 @@ class ListarComponentes extends Component {
     handleEnviarData() {
         //console.log(this.state.JSON);
         const arreglo = this.verificar();
+        console.log(arreglo);
         // console.log(JSON.stringify(arreglo));
         // const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
         const url = URL.url.concat('recaudaciones/id');
@@ -318,10 +323,8 @@ class ListarComponentes extends Component {
 
     }
     render() {
-
         const listado = this.state.data;
         //console.log(listado);
-
         return (
             <div className="table-scroll">
                 <div>
@@ -336,6 +339,7 @@ class ListarComponentes extends Component {
                             <th>Concepto</th>
                             <th>Codigo</th>
                             <th>Recibo</th>
+                            <th>Moneda</th>
                             <th>Importe</th>
                             <th>Fecha</th>
                             <th>Ubicación</th>
@@ -353,11 +357,12 @@ class ListarComponentes extends Component {
                             <td>{dynamicData.concepto}</td>
                             <td>{dynamicData.codigo}</td>
                             <td>{dynamicData.recibo}</td>
-                            <td>S/. {dynamicData.importe}</td>
+                            <td>{dynamicData.moneda}</td>
+                            <td>{dynamicData.mascara} {dynamicData.importe}</td>
                             <td>{dynamicData.fecha}</td>
                             <td><Combo items={this.state.ubicDato} val={this.handleChangeUbic} ubic={dynamicData.ubic}
-                                id_rec={dynamicData.id_rec} /></td>
-
+                                id_rec={dynamicData.id_rec} />
+                            </td>
                             <td>
                                 <Check validado={dynamicData.validado} id={dynamicData.id_rec}
                                     change={this.handleChangeEstado} />

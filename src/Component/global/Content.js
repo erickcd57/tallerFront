@@ -142,8 +142,6 @@ class Content extends Component{
     }
     //buscar
    handleSearchClick(e) {
-
-
       //  let url = 'https://api-modulocontrol.herokuapp.com/recaudaciones/';
         //          url = url.concat('detallada/');
        let url = URL.url.concat('recaudaciones/detallada/');

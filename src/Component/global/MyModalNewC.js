@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, ModalManager, Effect } from 'react-dynamic-modal';
+import { ModalFooter } from 'reactstrap';
 import './css/DatosCSS.css';
 import URL from './API/API';
 import './css/bootstrap.css';
@@ -10,6 +11,10 @@ class MyModal extends Component {
         super();
         this.handlerGuardar = this.handlerGuardar.bind(this);
         // this.texto=React.createRef();
+        this.state = {
+            data: null,
+            ubicDato: []
+        }
     }
     componentWillMount() {
         let data;
@@ -49,7 +54,7 @@ class MyModal extends Component {
             verif = false
         }
         var data = {};
-        data.id_alum = this.props.id;
+        //data.id_alum = this.props.id;
         data.id_concepto = document.getElementById("concepto").value;
         data.id_ubicacion = document.getElementById("ubicacion").value;
         data.codigo = document.getElementById("codigo").value;
@@ -61,9 +66,11 @@ class MyModal extends Component {
         data.validado = verif;
         data.tipo = document.getElementById("tipo").value;
         ModalManager.close();
+        console.log(data.id_alum);
         console.log(JSON.stringify(data));
         const url = URL.url.concat('recaudaciones/new');
         //const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
+        //const url = 'http://localhost:7896/recaudaciones/new'
         fetch(url, {
             method: 'POST',
             headers: {
@@ -84,13 +91,12 @@ class MyModal extends Component {
             });
     }
 
-    _onBlurInput(){
+    _onBlurInput() {
         let rec_value = document.getElementById("recibo").value;
         console.log(rec_value);
-        const url = URL.url.concat('recibo/'+rec_value);
+        const url = URL.url.concat('recibo/' + rec_value);
         // const url2 = 'http://localhost:7896/recibo/'+rec_value;
         console.log(url);
-
         fetch(url, {
             method: 'GET',
             headers: {
@@ -101,7 +107,7 @@ class MyModal extends Component {
         })
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+                //console.log(res);
                 if (res) { // exito
                     if (res.response === 1) {
                         alert("Este recibo ya se encuentra registrado");
@@ -111,7 +117,7 @@ class MyModal extends Component {
                         document.getElementById("tipo").disabled = true;
                         document.getElementById("verificar").disabled = true;
                         document.getElementById("button-send-modal").disabled = true;
-                    }else if(res.response === 0){
+                    } else if (res.response === 0) {
                         alert("Este recibo esta habilitado");
                         document.getElementById("importe").disabled = false;
                         document.getElementById("fecha").disabled = false;
@@ -125,16 +131,66 @@ class MyModal extends Component {
                 }
             });
     }
+    ubicaciones() {
+        let data;
+        const url = 'https://modulocontrol.herokuapp.com/ubicaciones';
+        //console.log(url);
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }).then(res => res.json()).then(res => {
+            //console.log(res);
+            if (res.status) {
+                data = res;
+                var x = document.getElementById("ubicacion");
+                for (var i = 0; i < data["data"].length; i++) {
+                    var miop = document.createElement("option");
+                    miop.text = data["data"][i]["descripcion"];
+                    miop.setAttribute("value", data["data"][i]["id_ubicacion"]);
+                    x.add(miop);
+                }
+            } else {
+                alert("Fallo al cargar datos de ubicaciones!");
+            }
+        })
+    }
+
+    tipos() {
+        let data;
+        const url = 'https://modulocontrol.herokuapp.com/tipos';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }).then(res => res.json()).then(res => {
+            //console.log(res);
+            if (res.status) {
+                data = res;
+                var x = document.getElementById("tipo");
+                for (var i = 0; i < data["data"].length; i++) {
+                    var miop = document.createElement("option");
+                    miop.text = data["data"][i]["descripcion"];
+                    miop.setAttribute("value", data["data"][i]["id_tipo"]);
+                    x.add(miop);
+                }
+            } else {
+                alert("Fallo al cargar datos de tipos!");
+            }
+        })
+    }
 
     render() {
         let nombre = this.props.nombre;
         let codigo = this.props.codigo;
         //let obs_upg = this.props.obs_upg;
         return (
-            <Modal
-                effect={Effect.SlideFromBottom}>
+            <Modal effect={Effect.SlideFromBottom} >
                 <div className="container" id="advanced-search-form">
-
                     <form>
                         <div className="form-group">
                             <label >Nombres y Apellidos</label>
@@ -150,7 +206,7 @@ class MyModal extends Component {
                         </div>
                         <div className="form-group">
                             <label>Recibo</label>
-                            <input type="number" min="0" className="form-control" placeholder="Recibo" id="recibo"  onBlur={this._onBlurInput} required />
+                            <input type="number" min="0" className="form-control" placeholder="Recibo" id="recibo" onBlur={this._onBlurInput} required />
                         </div>
                         <div className="form-group">
                             <label>Importe</label>
@@ -162,19 +218,12 @@ class MyModal extends Component {
                         </div>
                         <div className="form-group">
                             <label >Ubicación</label>
-                            <select required id="ubicacion" className="form-control" >
-                                <option value="" >Seleccione Ubicación</option>
-                                <option value="1" >Físico</option>
-                                <option value="2" >Copia</option>
-                                <option value="3" >No Disponible</option>
+                            <select required id="ubicacion" className="form-control" onClick={this.ubicaciones()}>
                             </select>
                         </div>
                         <div className="form-group">
                             <label >Tipo</label>
-                            <select required id="tipo" className="form-control" >
-                                <option value="" >Seleccione Tipo</option>
-                                <option value="1" >Banco</option>
-                                <option value="2" >Manual</option>
+                            <select required id="tipo" className="form-control" onClick={this.tipos()}>
                             </select>
                         </div>
                         <div className="form-group">
@@ -186,16 +235,27 @@ class MyModal extends Component {
                         </div>
                         <div className="form-group">
                             <label >Observaciones</label>
+                            <textarea rows="2" cols="30" id="obs" className="from-control" readOnly>
+                            </textarea>
+                        </div>
+                        <div className="form-group">
+                            <label >Observaciones UPG</label>
                             <textarea rows="2" cols="30" id="obs" className="from-control">
                             </textarea>
                         </div>
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={ModalManager.close}>Cerrar</button>
-                        <button id="button-send-modal" type="button" className="btn btn-primary" onClick={this.handlerGuardar}>ENVIAR</button>
                     </form>
+                    <ModalFooter>
+                        <div>
+                            <button data-dismiss="modal" className="btn btn-success" onClick={ModalManager.close}>Cerrar</button>
+                        </div>
+                        <div>
+                            <button id="button-send-modal" className="btn btn-success" onClick={this.handlerGuardar}>ENVIAR</button>
+                        </div>
+                    </ModalFooter>
                 </div>
                 <script>
                     window.onload=llenarConceptos;
-        </script>
+                </script>
             </Modal>
         );
     }
