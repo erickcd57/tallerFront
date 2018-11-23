@@ -171,7 +171,7 @@ class MyModal extends Component {
 
     render() {
         this.alterarArraySoles();
-        this.alterarArrayDolares();
+        //this.alterarArrayDolares();
         const text = this.state.dataAlterar;
         const externalCloseBtn = <button className="close" style={{ position: 'absolute', top: '15px', right: '15px' }} onClick={this.close}>&times;</button>;
         let cont = 0;

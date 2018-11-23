@@ -15,7 +15,6 @@ body{
  position:relative ;
 }
 
-
 #ctexto{
   position: absolute;
   top: 450px;
@@ -49,7 +48,7 @@ body{
 #advanced-search-form .form-group{
 	margin-bottom: 20px;
     margin-left:20px;
-	width: 30%;
+	width:30%;
     float:left;
     text-align: left;
 }
@@ -79,10 +78,12 @@ body{
     display: block;
     outline: none;
 }
-
-@media screen and (max-width: 800px){
+#advanced-search-form{
+    margin: 0px !important;
+}
+@media screen and (max-width: 1000px){
     #advanced-search-form .form-group{
-        width: 45%;
+        width: 30% !important;
     }
 
     #advanced-search-form{

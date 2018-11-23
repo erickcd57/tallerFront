@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Modal, ModalManager, Effect } from 'react-dynamic-modal';
-import { ModalFooter } from 'reactstrap';
 import './css/DatosCSS.css';
 import URL from './API/API';
 import './css/bootstrap.css';
@@ -184,15 +183,45 @@ class MyModal extends Component {
         })
     }
 
+    moneda() {
+        let data;
+        const url = 'https://modulocontrol.herokuapp.com/moneda';
+        //const url = 'http://localhost:7896/moneda';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }).then(res => res.json()).then(res => {
+            //console.log(res);
+            if (res.status) {
+                data = res;
+                var x = document.getElementById("moneda");
+                for (var i = 0; i < data["data"].length; i++) {
+                    var miopc = document.createElement("option");
+                    miopc.text = data["data"][i]["moneda"];
+                    miopc.setAttribute("value", data["data"][i]["id_moneda"]);
+                    x.add(miopc);
+                }
+            } else {
+                alert("Fallo al cargar datos de tipos!");
+            }
+        })
+    }
     render() {
         let nombre = this.props.nombre;
         let codigo = this.props.codigo;
         //let obs_upg = this.props.obs_upg;
         return (
-            <Modal effect={Effect.SlideFromBottom} >
+            <Modal className="modal" effect={Effect.SlideFromBottom} style={{
+                content: {
+                    margin: '20px auto'
+                }
+            }} >
                 <div className="container" id="advanced-search-form">
                     <form>
-                        <div className="form-group">
+                        <div className="form-group col-xs-12">
                             <label >Nombres y Apellidos</label>
                             <input type="text" className="form-control" placeholder="Nombres" id="nombre" value={nombre} disabled required />
                         </div>
@@ -243,15 +272,18 @@ class MyModal extends Component {
                             <textarea rows="2" cols="30" id="obs" className="from-control">
                             </textarea>
                         </div>
+                        <div className="form-group">
+                            <label >Moneda</label>
+                            <select required id="moneda" className="form-control" onClick={this.moneda()}>
+                            </select>
+                        </div>
                     </form>
-                    <ModalFooter>
-                        <div>
-                            <button data-dismiss="modal" className="btn btn-success" onClick={ModalManager.close}>Cerrar</button>
-                        </div>
-                        <div>
-                            <button id="button-send-modal" className="btn btn-success" onClick={this.handlerGuardar}>ENVIAR</button>
-                        </div>
-                    </ModalFooter>
+                    <div>
+                        <button data-dismiss="modal" className="btn btn-success" onClick={ModalManager.close}>Cerrar</button>
+                    </div>
+                    <div>
+                        <button id="button-send-modal" className="btn btn-success" onClick={this.handlerGuardar}>ENVIAR</button>
+                    </div>
                 </div>
                 <script>
                     window.onload=llenarConceptos;
