@@ -67,68 +67,73 @@ class MyModal extends Component {
         ModalManager.close();
         console.log(data.id_alum);
         console.log(JSON.stringify(data));
-        const url = URL.url.concat('recaudaciones/new');
-        //const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
-        //const url = 'http://localhost:7896/recaudaciones/new'
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-            .then(res => res.json())
-            .then(res => {
-                if (res.status) { // exito
-                    alert('Datos creados exitosamente');
-                    ModalManager.close();
-                    alert("actualizar aqui");
-                } else {
-                    alert("FALLÓ OPERACIÓN, ESPERE UN MOMENTO Y VUELVA A INTENTARLO ")
-                }
-            });
+        if( data.id_concepto !== "" || data.id_ubicacion !== "" || data.codigo  !== "" || data.numero !== "" || data.fecha !== "" || data.tipo !== "" ){
+
+            const url = URL.url.concat('recaudaciones/new');
+            //const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
+            //const url = 'http://localhost:7896/recaudaciones/new'
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.status) { // exito
+                        alert('Datos creados exitosamente');
+                        ModalManager.close();
+                        alert("actualizar aqui");
+                    } else {
+                        alert("FALLÓ OPERACIÓN, ESPERE UN MOMENTO Y VUELVA A INTENTARLO ")
+                    }
+                });
+        }else{
+            alert("Rellene todos los campos");
+        }
     }
 
     _onBlurInput() {
         let rec_value = document.getElementById("recibo").value;
-        console.log(rec_value);
-        const url = URL.url.concat('recibo/' + rec_value);
-        // const url2 = 'http://localhost:7896/recibo/'+rec_value;
-        console.log(url);
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
 
-        })
-            .then(res => res.json())
-            .then(res => {
-                //console.log(res);
-                if (res) { // exito
-                    if (res.response === 1) {
-                        alert("Este recibo ya se encuentra registrado");
-                        document.getElementById("importe").disabled = true;
-                        document.getElementById("fecha").disabled = true;
-                        document.getElementById("ubicacion").disabled = true;
-                        document.getElementById("tipo").disabled = true;
-                        document.getElementById("verificar").disabled = true;
-                        document.getElementById("button-send-modal").disabled = true;
-                    } else if (res.response === 0) {
-                        alert("Este recibo esta habilitado");
-                        document.getElementById("importe").disabled = false;
-                        document.getElementById("fecha").disabled = false;
-                        document.getElementById("ubicacion").disabled = false;
-                        document.getElementById("tipo").disabled = false;
-                        document.getElementById("verificar").disabled = false;
-                        document.getElementById("button-send-modal").disabled = false;
+        if(rec_value !== ""){
+            const url = URL.url.concat('recibo/' + rec_value);
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+    
+            })
+                .then(res => res.json())
+                .then(res => {
+                    //console.log(res);
+                    if (res) { // exito
+                        if (res.response === 1) {
+                            alert("Este recibo ya se encuentra registrado");
+                            document.getElementById("importe").disabled = true;
+                            document.getElementById("fecha").disabled = true;
+                            document.getElementById("ubicacion").disabled = true;
+                            document.getElementById("tipo").disabled = true;
+                            document.getElementById("verificar").disabled = true;
+                            document.getElementById("button-send-modal").disabled = true;
+                        } else if (res.response === 0) {
+                            alert("Este recibo esta habilitado");
+                            document.getElementById("importe").disabled = false;
+                            document.getElementById("fecha").disabled = false;
+                            document.getElementById("ubicacion").disabled = false;
+                            document.getElementById("tipo").disabled = false;
+                            document.getElementById("verificar").disabled = false;
+                            document.getElementById("button-send-modal").disabled = false;
+                        }
+                    } else {
+                        alert("FALLÓ OPERACIÓN, ESPERE UN MOMENTO Y VUELVA A INTENTARLO ")
                     }
-                } else {
-                    alert("FALLÓ OPERACIÓN, ESPERE UN MOMENTO Y VUELVA A INTENTARLO ")
-                }
-            });
+                });
+        }
     }
     ubicaciones() {
         let data;

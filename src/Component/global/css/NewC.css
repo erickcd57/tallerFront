@@ -22,6 +22,12 @@ body{
   text-align: right;
 }
 
+.btn-success .disabled, .btn-success:disabled{
+    background-color: #fff !important;
+    border-color: #6c757d !important;
+    color : #847592 !important;
+}
+
 #advanced-search-form{
     background-color: #fff;
     max-width: 800px;
