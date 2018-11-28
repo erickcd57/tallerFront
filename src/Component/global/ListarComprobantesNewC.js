@@ -345,7 +345,6 @@ class ListarComponentes extends Component {
                     <table className="tabla table-striped table-bordered table-hover" id="table">
                         <thead>
                             <tr className="tabla-cabecera">
-                                <th>Sel.</th>
                                 <th>Nro</th>
                                 <th>Nombre Apellido</th>
                                 <th>Concepto</th>
@@ -357,14 +356,11 @@ class ListarComponentes extends Component {
                                 <th>Ubicación</th>
                                 <th>Tipo</th>
                                 <th>Verificar</th>
-                                <th></th>
+                                <th>Observaciones</th>
                             </tr>
                         </thead>
                         <tbody id="table">{listado.map((dynamicData, i) =>
                             <tr key={i}>
-                                <td>
-                                    <input type="checkbox"></input>
-                                </td>
                                 <td>{i + 1}</td>
                                 <td onClick={(e) => this.eventoNombre(dynamicData.id, dynamicData.nombre, dynamicData.codigo)} title="click para añadir un nuevo registro" className="detalles" nam={dynamicData.nombre}>{dynamicData.nombre}</td>
                                 <td>{dynamicData.concepto}</td>

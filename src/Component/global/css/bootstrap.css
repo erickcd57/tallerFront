@@ -227,7 +227,7 @@ caption {
 }
 
 th {
-  text-align: inherit;
+  text-align: center;
 }
 
 label {
@@ -1705,11 +1705,13 @@ pre code {
 .table-bordered th,
 .table-bordered td {
   border: 1px solid #dee2e6;
+  text-align: center;
 }
 
 .table-bordered thead th,
 .table-bordered thead td {
   border-bottom-width: 2px;
+  text-align: center;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {

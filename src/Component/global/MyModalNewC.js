@@ -251,6 +251,11 @@ class MyModal extends Component {
                             <input type="date" id="fecha" className="form-control" required />
                         </div>
                         <div className="form-group">
+                            <label >Moneda</label>
+                            <select required id="moneda" className="form-control" onClick={this.moneda()}>
+                            </select>
+                        </div>
+                        <div className="form-group">
                             <label >Ubicación</label>
                             <select required id="ubicacion" className="form-control" onClick={this.ubicaciones()}>
                             </select>
@@ -258,13 +263,6 @@ class MyModal extends Component {
                         <div className="form-group">
                             <label >Tipo</label>
                             <select required id="tipo" className="form-control" onClick={this.tipos()}>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label >Verificar</label>
-                            <select required id="verificar" className="form-control" >
-                                <option value="true" >Validado</option>
-                                <option value="false" >No Validado</option>
                             </select>
                         </div>
                         <div className="form-group">
@@ -278,8 +276,10 @@ class MyModal extends Component {
                             </textarea>
                         </div>
                         <div className="form-group">
-                            <label >Moneda</label>
-                            <select required id="moneda" className="form-control" onClick={this.moneda()}>
+                            <label >Verificar</label>
+                            <select required id="verificar" className="form-control" >
+                                <option value="true" >Validado</option>
+                                <option value="false" >No Validado</option>
                             </select>
                         </div>
                     </form>

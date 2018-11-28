@@ -319,21 +319,14 @@ class ListarComponentes extends Component {
         ReactDOM.render(component, node);
     }
 
-    marcar() {
-
-    }
     render() {
         const listado = this.state.data;
         //console.log(listado);
         return (
             <div className="table-scroll">
-                <div>
-                    <input type="button" value="Sel. Todo" className="btn btn-success"></input>
-                </div>
                 <table className="table table-striped table-bordered table-hover">
                     <thead>
                         <tr className="tabla-cabecera">
-                            <th>Sel.</th>
                             <th>Nro</th>
                             <th>Nombre Apellido</th>
                             <th>Concepto</th>
@@ -349,9 +342,6 @@ class ListarComponentes extends Component {
                     </thead>
                     <tbody>{listado.map((dynamicData, i) =>
                         <tr key={i}>
-                            <td>
-                                <input type="checkbox"></input>
-                            </td>
                             <td>{i + 1}</td>
                             <td onClick={(e) => this.eventoNombre(e)} title="click para ver detalles" className="detalles" id={(dynamicData.codigo === "0") ? (dynamicData.nombre) : (dynamicData.codigo)}>{dynamicData.nombre}</td>
                             <td>{dynamicData.concepto}</td>

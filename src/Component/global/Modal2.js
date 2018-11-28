@@ -80,7 +80,7 @@ class MyModal extends Component {
         let arr = this.state.data;
         arr.map((dynamicData, i) => {
             //console.log(arr);
-            if (dynamicData.numero !== 'SubSumaSoles') {
+            if (dynamicData.recibo !== 'SubSumaSoles') {
                 if (dynamicData.moneda === "SOL")
                     sumaTotalSoles = sumaTotalSoles + parseFloat(dynamicData.importe);
             }
@@ -94,7 +94,7 @@ class MyModal extends Component {
         let arr = this.state.data;
         arr.map((dynamicData, i) => {
             //console.log(arr);
-            if (dynamicData.numero !== 'SubSumaDolares') {
+            if (dynamicData.recibo !== 'SubSumaDolares') {
                 if (dynamicData.moneda === "DOL")
                     sumaTotalDolares = sumaTotalDolares + parseFloat(dynamicData.importe);
             }
@@ -106,31 +106,32 @@ class MyModal extends Component {
     alterarArraySoles() {
         let suma = 0;
         let arr = this.state.dataAlterar;
+        //console.log(arr);
         let arrHueco = [];
         let ant = arr[0].concepto;
         let i = 0;
         while (i < arr.length) {
+            if (arr[i].moneda === 'SOL') {
                 if (ant === arr[i].concepto) {
-                    if(arr[i].moneda === "SOL"){
-                        suma = suma + parseFloat(arr[i].importe);
-                    }
+
+                    suma = suma + parseFloat(arr[i].importe);
                 } else {
-                        arr.splice(i, 0, [arrHueco]);
-                        arr[i].importe = suma;
-                        arr[i].numero = 'SUBSUMA';
-                        i++;
-                        ant = arr[i].concepto;
-                        suma = 0;
-                        if(arr[i].moneda === "SOL"){
-                            suma = suma + parseFloat(arr[i].importe);
-                        }
+                    arr.splice(i, 0, [arrHueco]);
+                    arr[i].importe = suma;
+                    arr[i].recibo = 'Subsuma Soles';
+                    i++;
+                    ant = arr[i].concepto;
+                    suma = 0;
+
+                    suma = suma + parseFloat(arr[i].importe);
+
                 }
-                i++;
+            }
+            i++;
         }
         arr.splice(i, 0, [arrHueco]);
         arr[i].importe = suma;
-        arr[i].numero = 'SUBSUMA';
-        console.log(suma);
+        arr[i].recibo = 'Subsuma Soles';
     }
     close() {
         this.setState({
@@ -141,37 +142,37 @@ class MyModal extends Component {
     alterarArrayDolares() {
         let suma = 0;
         let arr = this.state.dataAlterar;
+        //console.log(arr);
         let arrHueco = [];
         let ant = arr[0].concepto;
         let i = 0;
         while (i < arr.length) {
-                if (ant === arr[i].concepto) {
-                    if(arr[i].moneda === "DOL"){
-                        suma = suma + parseFloat(arr[i].importe);
-
-                    }
-                } else {
-                        arr.splice(i, 0, [arrHueco]);
-                        arr[i].importe = suma;
-                        arr[i].numero = 'SUBSUMADOL';
-                        i++;
-                        ant = arr[i].concepto;
-                        suma = 0;
-                        if(arr[i].moneda === "DOL"){
-                            suma = suma + parseFloat(arr[i].importe);
-                        }
+            if (ant === arr[i].concepto) {
+                if (arr[i].moneda === "DOL") {
+                    suma = suma + parseFloat(arr[i].importe);
                 }
+            } else {
+                arr.splice(i, 0, [arrHueco]);
+                arr[i].importe = suma;
+                arr[i].recibo = 'Subsuma Dolares';
                 i++;
+                ant = arr[i].concepto;
+                suma = 0;
+                if (arr[i].moneda === "DOL") {
+                    suma = suma + parseFloat(arr[i].importe);
+                }
+            }
+            i++;
         }
         arr.splice(i, 0, [arrHueco]);
         arr[i].importe = suma;
-        arr[i].numero = 'SUBSUMADOL';
-        console.log(suma);
+        arr[i].recibo = 'Subsuma Dolares';
+        //console.log(suma);
     }
 
     render() {
-        this.alterarArraySoles();
         this.alterarArrayDolares();
+        this.alterarArraySoles();
         const text = this.state.dataAlterar;
         const externalCloseBtn = <button className="close" style={{ position: 'absolute', top: '15px', right: '15px' }} onClick={this.close}>&times;</button>;
         let cont = 0;
@@ -180,6 +181,8 @@ class MyModal extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} external={externalCloseBtn} size={"lg"}>
                     <ModalHeader>
                         <Label>Nombre: {text[0].nombre}</Label>
+                        <br></br>
+                        <Label>Código: {text[0].codigo}</Label>
                     </ModalHeader>
                     <ModalBody>
                         <Table responsive>
@@ -196,22 +199,26 @@ class MyModal extends Component {
                             </thead>
                             <tbody>{text.map((dynamicData, i) =>
                                 <tr key={i}>
-                                    {(dynamicData.numero === "SUBSUMA" || dynamicData.numero === "SUBSUMADOL") ? (<td colSpan={1}></td>) : (<td>{cont += 1}</td>)}
+                                    {(dynamicData.recibo === "Subsuma Soles") ? (<td colSpan={1}></td>) :
+                                        ((dynamicData.recibo === "Subsuma Dolares") ? (<td colSpan={1}></td>) : (<td>{cont += 1}</td>))}
                                     <td>{dynamicData.concepto}</td>
-                                    {(dynamicData.numero === "SUBSUMA" || dynamicData.numero === "SUBSUMADOL") ? (<td colSpan={1}>{dynamicData.recibo}</td>) : (<td>{dynamicData.recibo}</td>)}
+                                    {(dynamicData.recibo === "Subsuma Soles") ? (<td colSpan={1}>{dynamicData.recibo}</td>) :
+                                        ((dynamicData.recibo === "SubSuma Dolares") ? (<td colSpan={1}>{dynamicData.recibo}</td>) : (<td>{dynamicData.recibo}</td>))}
                                     <td>{dynamicData.moneda}</td>
-                                    {(dynamicData.numero === "SUBSUMA" || dynamicData.numero === "SUBSUMADOL") ? (<td colSpan={1} className="subTotal">{dynamicData.mascara} {dynamicData.importe}</td>) : (<td>{dynamicData.mascara} {dynamicData.importe}</td>)}
+                                    {(dynamicData.recibo === "Subsuma Soles") ? (<td colSpan={1} className="subTotal">S/ {dynamicData.importe}</td>) :
+                                        ((dynamicData.recibo === "Subsuma Dolares") ? (<td colSpan={1} className="subTotal">$/ {dynamicData.importe}</td>) : (<td>{dynamicData.mascara} {dynamicData.importe}</td>))}
                                     <td>{dynamicData.fecha}</td>
                                 </tr>
                             )}
-                                <tr >
-                                    <td colSpan={3} >Total Soles</td>
-                                    <td className="total">S/ {this.sumaTotalSoles()}</td>
-                                </tr>
                                 <tr>
                                     <td colSpan={3} >Total Dolares</td>
                                     <td className="total">$ {this.sumaTotalDolares()}</td>
                                 </tr>
+                                <tr >
+                                    <td colSpan={3} >Total Soles</td>
+                                    <td className="total">S/ {this.sumaTotalSoles()}</td>
+                                </tr>
+
                             </tbody>
                         </Table>
                     </ModalBody>
