@@ -71,8 +71,8 @@ class MyModal extends Component {
         if (data.id_concepto !== "" || data.id_ubicacion !== "" || data.codigo !== "" || data.numero !== "" || data.fecha !== "" || data.tipo !== "") {
 
             //const url = URL.url.concat('recaudaciones/new');
-            //const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
-            const url = 'http://localhost:7896/recaudaciones/new'
+            const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
+            //const url = 'http://localhost:7896/recaudaciones/new'
             fetch(url, {
                 method: 'POST',
                 headers: {
