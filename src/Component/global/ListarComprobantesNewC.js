@@ -108,7 +108,7 @@ class ListarComponentes extends Component {
 
     // crear un objeto para enviar al server
     crearJSON(codigo, concepto, ubic, id_rec, recibo, 
-        moneda, mascara, importe, obs, obs_upg, flag, fecha, validado, tipo) {
+        moneda, mascara, importe, obs, obs_upg, flag, fecha, validado, tipo, id_alum) {
         if (obs == null) obs = "";
         if (obs_upg == null) obs_upg = "";
         if (ubic == null) ubic = 0;
@@ -127,6 +127,7 @@ class ListarComponentes extends Component {
         this.fecha = fecha;
         this.tipo = tipo;
         this.validado = validado;
+        this.id_alum = id_alum;
     }
 
     // funcion verifica los checks y las observaciones nuevas
@@ -136,7 +137,7 @@ class ListarComponentes extends Component {
         arreglo.map(item => {
             arreglo2 = arreglo2.concat(new this.crearJSON(item.codigo, item.concepto, item.ubic, item.id_rec, item.recibo, 
                 item.moneda, item.mascara, item.importe,
-                item.obs, item.obs_upg, item.flag, item.fecha, item.validado, item.tipo))
+                item.obs, item.obs_upg, item.flag, item.fecha, item.validado, item.tipo, item.id_alum))
             return null;
         });
         //  console.log(arreglo2);
@@ -164,7 +165,7 @@ class ListarComponentes extends Component {
         this.mascara = mascara;
         this.importe = importe;
         this.fecha = fecha && fecha.substr(8, 2) + "-" + fecha.substr(5, 2) + "-" + fecha.substr(0, 4);
-        this.id = id_alum;
+        this.id_alum = id_alum;
     }
     //recibe las ubicaciones de los archivos
     handleChangeUbic(ubic, id_rec) {
@@ -307,16 +308,16 @@ class ListarComponentes extends Component {
 
 
     eventoNombre(e, f, c) {
-        let id = e;
+        let id_alum = e;
         let nom = f;
         let cod = c;
-        ModalManager.open(<Modal2 id={id} nombre={nom} codigo={cod} />);
+        ModalManager.open(<Modal2 id={id_alum} nombre={nom} codigo={cod} />);
     }
 
 
     render() {
         const listado = this.state.data;
-        // console.log(listado);
+        //console.log(this.props);
         if (listado == null) {
             return (
                 <div></div>
@@ -362,7 +363,7 @@ class ListarComponentes extends Component {
                         <tbody id="table">{listado.map((dynamicData, i) =>
                             <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td onClick={(e) => this.eventoNombre(dynamicData.id, dynamicData.nombre, dynamicData.codigo)} title="click para añadir un nuevo registro" className="detalles" nam={dynamicData.nombre}>{dynamicData.nombre}</td>
+                                <td onClick={(e) => this.eventoNombre(dynamicData.id_alum, dynamicData.nombre, dynamicData.codigo)} title="click para añadir un nuevo registro" className="detalles" nam={dynamicData.nombre}>{dynamicData.nombre}</td>
                                 <td>{dynamicData.concepto}</td>
                                 <td>{dynamicData.codigo}</td>
                                 <td>{dynamicData.recibo}</td>

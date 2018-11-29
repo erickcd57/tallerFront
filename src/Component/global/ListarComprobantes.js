@@ -321,7 +321,7 @@ class ListarComponentes extends Component {
 
     render() {
         const listado = this.state.data;
-        //console.log(listado);
+        console.log(listado);
         return (
             <div className="table-scroll">
                 <table className="table table-striped table-bordered table-hover">
