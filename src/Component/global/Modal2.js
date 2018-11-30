@@ -481,9 +481,9 @@ Imprimir(){
             <div>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} external={externalCloseBtn} size={"lg"}>
                     <ModalHeader>
-                        <Label>Nombre: {text[0].nombre}</Label>
+                        <Label>NOMBRE: {text[0].nombre}</Label>
                         <br></br>
-                        <Label>Código: {text[0].codigo}</Label>
+                        <Label>CODIGO: {text[0].codigo}        </Label> <Label>DNI: {text[0].dni}</Label>
                     </ModalHeader>
                     <ModalBody>
                         <Table responsive>

@@ -53,44 +53,46 @@ class MyModal extends Component {
             verif = false
         }
         var data = {};
-        //data.id_alum = this.props.id;
+        data.id_alum = this.props.id;
         data.id_concepto = document.getElementById("concepto").value;
         data.id_ubicacion = document.getElementById("ubicacion").value;
-        data.codigo = document.getElementById("codigo").value;
+        data.cod_alum = document.getElementById("codigo").value;
         data.numero = document.getElementById("recibo").value;
         data.importe = document.getElementById("importe").value;
         data.observacion = document.getElementById("obs").value;
-        //data.observacion_upg = document.getElementById("obs_upg").value;
+        data.observacion_upg = document.getElementById("obs_upg").value;
         data.fecha = document.getElementById("fecha").value;
         data.validado = verif;
-        data.tipo = document.getElementById("tipo").value;
+        data.id_tipo = document.getElementById("tipo").value;
+        data.moneda = document.getElementById("moneda").value;
         ModalManager.close();
-        console.log(data.id_alum);
+        console.log(this.props);
         console.log(JSON.stringify(data));
-        if( data.id_concepto !== "" || data.id_ubicacion !== "" || data.codigo  !== "" || data.numero !== "" || data.fecha !== "" || data.tipo !== "" ){
+        if (data.id_concepto !== "" || data.id_ubicacion !== "" || data.codigo !== "" || data.numero !== "" || data.fecha !== "" || data.tipo !== "") {
 
-            const url = URL.url.concat('recaudaciones/new');
-            //const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
+            //const url = URL.url.concat('recaudaciones/new');
+            const url= 'https://modulocontrol.herokuapp.com/recaudaciones/new';
             //const url = 'http://localhost:7896/recaudaciones/new'
             fetch(url, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin':'*'
                 },
                 body: JSON.stringify(data)
             })
                 .then(res => res.json())
                 .then(res => {
                     if (res.status) { // exito
+                        console.log(res.status);
                         alert('Datos creados exitosamente');
                         ModalManager.close();
-                        alert("actualizar aqui");
                     } else {
                         alert("FALLÓ OPERACIÓN, ESPERE UN MOMENTO Y VUELVA A INTENTARLO ")
                     }
                 });
-        }else{
+        } else {
             alert("Rellene todos los campos");
         }
     }
@@ -98,7 +100,7 @@ class MyModal extends Component {
     _onBlurInput() {
         let rec_value = document.getElementById("recibo").value;
 
-        if(rec_value !== ""){
+        if (rec_value !== "") {
             const url = URL.url.concat('recibo/' + rec_value);
             fetch(url, {
                 method: 'GET',
@@ -106,7 +108,7 @@ class MyModal extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-    
+
             })
                 .then(res => res.json())
                 .then(res => {
@@ -121,7 +123,7 @@ class MyModal extends Component {
                             document.getElementById("verificar").disabled = true;
                             document.getElementById("button-send-modal").disabled = true;
                         } else if (res.response === 0) {
-                            alert("Este recibo esta habilitado");
+                            //alert("Este recibo esta habilitado");
                             document.getElementById("importe").disabled = false;
                             document.getElementById("fecha").disabled = false;
                             document.getElementById("ubicacion").disabled = false;
@@ -210,7 +212,7 @@ class MyModal extends Component {
                     x.add(miopc);
                 }
             } else {
-                alert("Fallo al cargar datos de tipos!");
+                alert("Fallo al cargar datos de monedas!");
             }
         })
     }
@@ -272,7 +274,7 @@ class MyModal extends Component {
                         </div>
                         <div className="form-group">
                             <label >Observaciones UPG</label>
-                            <textarea rows="2" cols="30" id="obs" className="from-control">
+                            <textarea rows="2" cols="30" id="obs_upg" className="from-control">
                             </textarea>
                         </div>
                         <div className="form-group">
@@ -284,10 +286,10 @@ class MyModal extends Component {
                         </div>
                     </form>
                     <div>
-                        <button data-dismiss="modal" className="btn btn-success" onClick={ModalManager.close}>Cerrar</button>
+                        <button id="button-send-modal" className="btn btn-success" onClick={this.handlerGuardar}>REGISTRAR</button>
                     </div>
                     <div>
-                        <button id="button-send-modal" className="btn btn-success" onClick={this.handlerGuardar}>ENVIAR</button>
+                        <button data-dismiss="modal" className="btn btn-success" onClick={ModalManager.close}>CERRAR</button>
                     </div>
                 </div>
                 <script>
