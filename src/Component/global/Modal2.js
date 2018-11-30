@@ -365,7 +365,13 @@ Imprimir(){
     doc.setFont("helvetica");
     doc.setFontType("normal");
     doc.setFontSize(9);
-    doc.text(this.state.data[0].concepto, 150, 180);//programa
+    if(this.state.data[0].nombre_programa==null){
+      doc.text("  ", 150, 180);
+    }
+    else{
+      doc.text(this.state.data[0].nombre_programa, 150, 180); //AQUI VA EL DNI
+    }
+    //doc.text(this.state.data[0].nombre_programa, 150, 180);//programa
 
 
     doc.setFont("helvetica");
@@ -376,11 +382,11 @@ Imprimir(){
     doc.setFont("helvetica");
     doc.setFontType("normal");
     doc.setFontSize(9);
-    if(this.state.data[0].codigo==null){
-      doc.text("null", 610, 160);
+    if(this.state.data[0].dni==null){
+      doc.text("", 610, 160);
     }
     else{
-      doc.text("", 610, 160); //AQUI VA EL DNI
+      doc.text(this.state.data[0].dni, 610, 160); //AQUI VA EL DNI
     }
 
 
@@ -415,7 +421,7 @@ Imprimir(){
                     showHeader:'firstPage'
 
                 });
-
+/*
                   var first = doc.autoTable.previous;
                   //FOOTER
                           var pageCount = doc.internal.getNumberOfPages();
@@ -437,7 +443,7 @@ Imprimir(){
                           doc.text(75,585,"taller");
                           doc.text(125,585,"-");
                           doc.text(135,585,this.state.data[0].nombre);
-                          doc.text(700,585,"SIGAP v.1.0");
+                          doc.text(700,585,"SIGAP v.2.0");
                           doc.text(800,585, doc.internal.getCurrentPageInfo().pageNumber + "/" + pageCount);
 
                           doc.setDrawColor(0, 0, 0);
@@ -445,15 +451,23 @@ Imprimir(){
                           doc.line(35, 576,816, 576);
 
                         }
-
+*/
                         if(listadoFinal){
                         var first = doc.autoTable.previous;
                         doc.setFont("helvetica");
                         doc.setFontType("bold");
                         doc.setFontSize(11);
-                        doc.text("TOTAL CANCELADO: S/."+this.state.sumaTotalSoles,620,first.finalY+25);
+                        doc.text("TOTAL CANCELADO SOLES: S/."+this.sumaTotalSoles(),520,first.finalY+25);
                       //  doc.text("TOTAL CANCELADO: S/."+this.sumaTotalSoles,620,first.finalY+25);
                       }
+                      if(listadoFinal){
+                      var first = doc.autoTable.previous;
+                      doc.setFont("helvetica");
+                      doc.setFontType("bold");
+                      doc.setFontSize(11);
+                      doc.text("TOTAL CANCELADO DOLARES: S/."+this.sumaTotalDolares(),520,first.finalY+50);
+                    //  doc.text("TOTAL CANCELADO: S/."+this.sumaTotalSoles,620,first.finalY+25);
+                    }
 
     var string = doc.output('datauristring');
     var iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>"
