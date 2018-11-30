@@ -44,7 +44,7 @@ class ListarComponentes extends Component {
                 arreglo = arreglo.concat(new this.Obj(item.id_rec, item.observacion, item.observacion_upg, item.id_ubicacion
                     && item.id_ubicacion, item.validado, item.nombre,
                     item.concepto, item.codigo, item.recibo, item.moneda, item.mascara,
-                     item.importe, item.fecha
+                     item.importe, item.fecha, item.dni
                     ));
                 return null;
             });
@@ -128,7 +128,7 @@ class ListarComponentes extends Component {
 
     //crea un objeto para pasar al hijo
     Obj(id_rec, obs, obs_upg, ubic, validado, nombre, concepto, codigo, recibo,
-        moneda, mascara, importe, fecha) {
+        moneda, mascara, importe, fecha, dni) {
         this.id_rec = id_rec;
         this.obs = obs;
         this.obs_upg = obs_upg;
@@ -141,6 +141,7 @@ class ListarComponentes extends Component {
         this.moneda = moneda;
         this.mascara = mascara;
         this.importe = importe;
+        this.dni = dni;
         //console.log(convertDateFormat(fecha.substr(0,10)));
         if (fecha !== null) {
             let fTemp = fecha.substr(0, 10).split("-");
