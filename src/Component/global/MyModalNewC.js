@@ -71,7 +71,7 @@ class MyModal extends Component {
         if (data.id_concepto !== "" || data.id_ubicacion !== "" || data.codigo !== "" || data.numero !== "" || data.fecha !== "" || data.tipo !== "") {
 
             //const url = URL.url.concat('recaudaciones/new');
-            const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
+            const url= 'https://modulocontrol.herokuapp.com/recaudaciones/new';
             //const url = 'http://localhost:7896/recaudaciones/new'
             fetch(url, {
                 method: 'POST',
@@ -80,12 +80,12 @@ class MyModal extends Component {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin':'*'
                 },
-                mode: 'no-cors',
                 body: JSON.stringify(data)
             })
                 .then(res => res.json())
                 .then(res => {
                     if (res.status) { // exito
+                        console.log(res.status);
                         alert('Datos creados exitosamente');
                         ModalManager.close();
                     } else {
