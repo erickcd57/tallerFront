@@ -80,7 +80,7 @@ class MyModal extends Component {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin':'*'
                 },
-                mode: 'cors',
+                mode: 'no-cors',
                 body: JSON.stringify(data)
             })
                 .then(res => res.json())
