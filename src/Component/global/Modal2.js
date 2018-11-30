@@ -446,6 +446,15 @@ Imprimir(){
 
                         }
 
+                        if(listadoFinal){
+                        var first = doc.autoTable.previous;
+                        doc.setFont("helvetica");
+                        doc.setFontType("bold");
+                        doc.setFontSize(11);
+                        doc.text("TOTAL CANCELADO: S/."+this.state.sumaTotalSoles,620,first.finalY+25);
+                      //  doc.text("TOTAL CANCELADO: S/."+this.sumaTotalSoles,620,first.finalY+25);
+                      }
+
     var string = doc.output('datauristring');
     var iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>"
     var x = window.open();
