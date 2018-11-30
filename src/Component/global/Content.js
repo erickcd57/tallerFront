@@ -170,7 +170,7 @@ class Content extends Component{
                mensaje:"",
                operacion:"c"
            });
-           console.log(arra);
+           //console.log(arra);
            fetch(url, {
 
                method: 'POST',

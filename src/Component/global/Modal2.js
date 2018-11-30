@@ -387,9 +387,9 @@ Imprimir(){
     render() {
         this.alterarArrayDolares();
         this.alterarArraySoles();
-        console.log('hola');
-        console.log(this.state.data[0]);
-        console.log(this.state.dataAlterar);
+        //console.log('hola');
+        //console.log(this.state.data[0]);
+        //console.log(this.state.dataAlterar);
         const text = this.state.dataAlterar;
         const externalCloseBtn = <button className="close" style={{ position: 'absolute', top: '15px', right: '15px' }} onClick={this.close}>&times;</button>;
         let cont = 0;
@@ -397,9 +397,9 @@ Imprimir(){
             <div>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} external={externalCloseBtn} size={"lg"}>
                     <ModalHeader>
-                        <Label>NOMBRE: {text[0].nombre}     </Label><Label>CODIGO: {text[0].codigo}</Label>
+                        <Label>NOMBRE: {text[0].nombre}</Label>
                         <br></br>
-                        <Label>DNI: {text[0].dni}</Label>
+                        <Label>CODIGO: {text[0].codigo}        </Label> <Label>DNI: {text[0].dni}</Label>
                     </ModalHeader>
                     <ModalBody>
                         <Table responsive>

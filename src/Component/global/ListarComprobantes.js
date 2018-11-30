@@ -44,7 +44,7 @@ class ListarComponentes extends Component {
                 arreglo = arreglo.concat(new this.Obj(item.id_rec, item.observacion, item.observacion_upg, item.id_ubicacion
                     && item.id_ubicacion, item.validado, item.nombre,
                     item.concepto, item.codigo, item.recibo, item.moneda, item.mascara,
-                     item.importe, item.fecha, item.dni
+                     item.importe, item.fecha, item.dni, item.nombre_programa
                     ));
                 return null;
             });
@@ -128,7 +128,7 @@ class ListarComponentes extends Component {
 
     //crea un objeto para pasar al hijo
     Obj(id_rec, obs, obs_upg, ubic, validado, nombre, concepto, codigo, recibo,
-        moneda, mascara, importe, fecha, dni) {
+        moneda, mascara, importe, fecha, dni, nombre_programa) {
         this.id_rec = id_rec;
         this.obs = obs;
         this.obs_upg = obs_upg;
@@ -142,6 +142,7 @@ class ListarComponentes extends Component {
         this.mascara = mascara;
         this.importe = importe;
         this.dni = dni;
+        this.nombre_programa = nombre_programa;
         //console.log(convertDateFormat(fecha.substr(0,10)));
         if (fecha !== null) {
             let fTemp = fecha.substr(0, 10).split("-");
@@ -155,7 +156,7 @@ class ListarComponentes extends Component {
     }
     //recibe las ubicaciones de los archivos
     handleChangeUbic(ubic, id_rec) {
-        console.log(ubic);
+        //console.log(ubic);
         this.state.data.map(items => {
             if (items.id_rec === id_rec) {
                 items.ubic = ubic;
@@ -253,7 +254,7 @@ class ListarComponentes extends Component {
     handleEnviarData() {
         //console.log(this.state.JSON);
         const arreglo = this.verificar();
-        console.log(arreglo);
+        //console.log(arreglo);
         // console.log(JSON.stringify(arreglo));
         // const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
         const url = URL.url.concat('recaudaciones/id');
@@ -322,7 +323,7 @@ class ListarComponentes extends Component {
 
     render() {
         const listado = this.state.data;
-        console.log(listado);
+        //console.log(listado);
         return (
             <div className="table-scroll">
                 <table className="table table-striped table-bordered table-hover">
