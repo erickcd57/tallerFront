@@ -138,7 +138,7 @@ class Content extends Component{
       //this.vaciado()
         console.log("DSAEW");
         console.log(this.state);
-      //  even.preventDefault();    
+      //  even.preventDefault();
     }
     //buscar
    handleSearchClick(e) {
@@ -165,6 +165,10 @@ class Content extends Component{
                "dni":this.state.dni,
                "codigo":this.state.codigo
            };
+           let arra2=[arra]
+
+
+           console.log(arra2);
            this.setState({
                isLoading:true,
                mensaje:"",
